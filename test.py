@@ -10,16 +10,16 @@ Hentai.exists(doujin.id)
 print(doujin.title(Format.Pretty))
 
 # [Tag(id=3981, type='artist', name='shindol', url='https://nhentai.net/artist/shindol/', count=279)]
-print(doujin.artist)
+print(doujin.artist[0].name)
 
-# ['dark skin', 'group', ... ]
+# # ['dark skin', 'group', ... ]
 print([tag.name for tag in doujin.tag])
 
-# 2016-10-18 12:28:49+00:00
-print(doujin.upload_date)
+# # 2016-10-18 12:28:49+00:00
+# print(doujin.upload_date)
 
-# ['https://i.nhentai.net/galleries/987560/1.jpg', ... ]
-print(doujin.image_urls)
+# # ['https://i.nhentai.net/galleries/987560/1.jpg', ... ]
+print(doujin.image_urls[0])
 
-# store all image urls to disk
-doujin.download(progressbar=True)
+# # store all image urls to disk
+# doujin.download(progressbar=True)

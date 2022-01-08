@@ -8,6 +8,7 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
 client = commands.Bot(command_prefix='c!')
+e = discord.Embed()
 
 @client.event
 async def on_ready():
@@ -21,9 +22,15 @@ async def ping(ctx):
 async def nhentai(ctx, arg):
 
     if arg.isnumeric():
-        doujin = Hentai(arg)
+        doujin = Hentai(int(arg))
         if Hentai.exists(doujin.id):
-            await ctx.send(f'Title: {doujin.title} Artist: {doujin.artist} Tags: {[tag.name for tag in doujin.tag]} {doujin.image_urls}')
+            await ctx.send(f'''
+                > Title: [{doujin.title(Format.Pretty)}](https://nhentai.net/g/{int(arg)}) 
+                > Artist: {doujin.artist[0].name} 
+                > {[tag.name for tag in doujin.tag]} 
+                > {doujin.image_urls[0]} \
+                ''')
+
     else:
         return
 client.run(TOKEN)
