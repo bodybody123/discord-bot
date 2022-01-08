@@ -1,5 +1,10 @@
+import os
+from dotenv import load_dotenv
 import discord
 from discord.ext import commands
+
+load_dotenv()
+TOKEN = os.getenv('TOKEN')
 
 client = commands.Bot(command_prefix='c!')
 
@@ -9,10 +14,13 @@ async def on_ready():
 
 @client.command()
 async def ping(ctx):
-    await print(f'pong {round(client.latency * 1000)}ms')
+    await ctx.send(f'pong {round(client.latency * 1000)}ms')
 
 @client.command()
-async def test(ctx, arg):
-    await ctx.send(arg)
+async def nhentai(ctx, arg):
 
-client.run('OTI4NTM2Mjg2MDE5NTk2MzE5.YdaMzQ.gU0glq9NtLjjfhI9M4W6nAqe3zk')
+    if arg.isnumeric():
+        await ctx.send(arg)
+    else:
+        return
+client.run(TOKEN)
