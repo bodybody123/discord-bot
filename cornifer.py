@@ -5,6 +5,7 @@ from discord.ext import commands
 from hentai import Hentai, Format
 import requests
 import urllib.parse
+import json
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
@@ -38,11 +39,24 @@ async def nhentai(ctx, arg):
 
 
 @client.command()
-async def sauce(ctx, arg):
-    # await ctx.send(
-    #     requests
-    #     .get("https://api.trace.moe/search?url={}"
-    #     .format(urllib.parse.quote_plus(arg))).json())
-    await ctx.send(requests.get("https://api.trace.moe/search?url={}".format(urllib.parse.quote_plus("https://images.plurk.com/32B15UXxymfSMwKGTObY5e.jpg"))).json())
+async def sauce(ctx):
+    attachment_url = ctx.message.attachments[0].url
+    req = requests.get(
+        "https://api.trace.moe/search?url={}"
+        .format(urllib.parse.quote_plus(attachment_url))
+        ).json()
+
+    trace = req['result'][0]
+
+    embed = discord.Embed(
+        title = trace['filename'],
+        colour = discord.Colour.purple()
+    )
+
+    embed.set_thumbnail(url=trace['image'])
+    embed.add_field(name='video preview', value=trace['video'], inline=false)
+    embed.add_field(name='episode', value=trace['episode'])
+    embed.add_field(name='similarity', value="{:.2f}".format(trace['similarity']))
+    await ctx.send(embed=embed)
 
 client.run(TOKEN)
