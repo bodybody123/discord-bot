@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 from hentai import Hentai, Format
+import requests
+import urllib.parse
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
@@ -33,4 +35,14 @@ async def nhentai(ctx, arg):
 
     else:
         return
+
+
+@client.command()
+async def sauce(ctx, arg):
+    # await ctx.send(
+    #     requests
+    #     .get("https://api.trace.moe/search?url={}"
+    #     .format(urllib.parse.quote_plus(arg))).json())
+    await ctx.send(requests.get("https://api.trace.moe/search?url={}".format(urllib.parse.quote_plus("https://images.plurk.com/32B15UXxymfSMwKGTObY5e.jpg"))).json())
+
 client.run(TOKEN)
