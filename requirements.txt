@@ -2,5 +2,5 @@ discord.py
 python-dotenv
 hentai
 requests
-urllib.parse
+urlparse
 json
