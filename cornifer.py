@@ -54,7 +54,7 @@ async def sauce(ctx):
     )
 
     embed.set_thumbnail(url=trace['image'])
-    embed.add_field(name='video preview', value=trace['video'], inline=false)
+    embed.add_field(name='video preview', value=trace['video'], inline=False)
     embed.add_field(name='episode', value=trace['episode'])
     embed.add_field(name='similarity', value="{:.2f}".format(trace['similarity']))
     await ctx.send(embed=embed)
