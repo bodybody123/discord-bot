@@ -17,18 +17,6 @@ e = discord.Embed()
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith('halo cornifer'):
-        if message.author.id == 231777334791897088:
-            await message.channel.send('halo bos seperti biasa?')
-        else:
-            await message.channel.send('sapa lu anjing sok kenal')
-
-
-
 
 @client.command()
 async def ping(ctx):
