@@ -17,7 +17,6 @@ e = discord.Embed()
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
-
 @client.command()
 async def ping(ctx):
     await ctx.send(f'pong {round(client.latency * 1000)}ms')
@@ -28,16 +27,18 @@ async def nhentai(ctx, arg):
     if arg.isnumeric():
         doujin = Hentai(int(arg))
         if Hentai.exists(doujin.id):
-            await ctx.send(f'''
-                > Title: [{doujin.title(Format.Pretty)}](https://nhentai.net/g/{int(arg)}) 
-                > Artist: {doujin.artist[0].name} 
-                > {[tag.name for tag in doujin.tag]} 
-                > {doujin.image_urls[0]} \
-                ''')
+        	embed = discord.Embed(
+        	    title= doujin.title(Format.Pretty),
+        	    colour= discord.Colour.blue()
+        	)
+        embed.set_thumbnail(url=doujin.image_urls[0])
+        embed.add_field(name='Artist', value=doujin.image_urls[0], inline=false)
+        embed.add_field(name='Tags', value=[tag.name for tag in doujin.tag], inline=false)
+        embed.add_field(name='Sauce', value=f"https://nhentai.net/g/{int(arg)}", inline=false)
+        await ctx.send(embed=embed)
 
     else:
         return
-
 
 @client.command()
 async def sauce(ctx):
