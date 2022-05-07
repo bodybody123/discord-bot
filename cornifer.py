@@ -31,11 +31,11 @@ async def nhentai(ctx, arg):
         	    title= doujin.title(Format.Pretty),
         	    colour= discord.Colour.blue()
         	)
-        embed.set_thumbnail(url=doujin.image_urls[0])
-        embed.add_field(name='Artist', value=doujin.image_urls[0], inline=false)
-        embed.add_field(name='Tags', value=[tag.name for tag in doujin.tag], inline=false)
-        embed.add_field(name='Sauce', value=f"https://nhentai.net/g/{int(arg)}", inline=false)
-        await ctx.send(embed=embed)
+                embed.set_thumbnail(url=doujin.image_urls[0])
+                embed.add_field(name='Artist', value=doujin.image_urls[0], inline=false)
+                embed.add_field(name='Tags', value=[tag.name for tag in doujin.tag], inline=false)
+                embed.add_field(name='Sauce', value=f"https://nhentai.net/g/{int(arg)}", inline=false)
+                await ctx.send(embed=embed)
 
     else:
         return
