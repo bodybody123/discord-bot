@@ -27,15 +27,18 @@ async def nhentai(ctx, arg):
     if arg.isnumeric():
         doujin = Hentai(int(arg))
         if Hentai.exists(doujin.id):
-        	embed = discord.Embed(
-        	    title= doujin.title(Format.Pretty),
-        	    colour= discord.Colour.blue()
-        	)
-                embed.set_thumbnail(url=doujin.image_urls[0])
-                embed.add_field(name='Artist', value=doujin.image_urls[0], inline=false)
-                embed.add_field(name='Tags', value=[tag.name for tag in doujin.tag], inline=false)
-                embed.add_field(name='Sauce', value=f"https://nhentai.net/g/{int(arg)}", inline=false)
-                await ctx.send(embed=embed)
+            embed = discord.Embed(
+                title = doujin.title(Format.Pretty),
+                colour = discord.Colour.blue()
+            ) 
+
+            embed.set_thumbnail(url=doujin.image_urls[0])
+            embed.set_image(url=doujin.image_urls[0])
+            embed.add_field(name='Artist', value=doujin.image_urls[0], inline=False)
+            embed.add_field(name='Tags', value=[tag.name for tag in doujin.tag], inline=False)
+            embed.add_field(name='Sauce', value=f"https://nhentai.net/g/{int(arg)}", inline=False)
+
+            await ctx.send(embed=embed)
 
     else:
         return
