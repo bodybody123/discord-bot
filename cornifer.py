@@ -69,12 +69,12 @@ async def sauce(ctx):
 
 @client.command()
 async def bomb(ctx, tag='loli'):
-    response = requests.get('https://yande.re/post.json?tags={}&limit=5'.format(tag))
+    response = requests.get('https://yande.re/post.json?tags={}&limit=100'.format(tag))
 
     data = convertJson(response.json())
     await ctx.send(data);
 
 def convertJson(jsonData):
-    return jsonData[random.randrange(0,5)]['jpeg_url']
+    return jsonData[random.randrange(0,100)]['jpeg_url']
 
 client.run(TOKEN)
