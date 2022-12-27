@@ -1,0 +1,6 @@
+# flyctl launch added from .gitignore
+#exclude env file
+**\.env
+
+discord-bot-horny
+fly.toml

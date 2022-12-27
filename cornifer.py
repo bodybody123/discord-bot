@@ -12,7 +12,9 @@ import json
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
-client = commands.Bot(command_prefix='c!')
+intents = discord.Intents.all()
+
+client = commands.Bot(command_prefix='c!', intents=intents)
 e = discord.Embed()
 
 @client.event
