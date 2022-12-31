@@ -3,3 +3,4 @@ python-dotenv
 hentai
 requests
 parse
+dns

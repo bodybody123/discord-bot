@@ -8,6 +8,12 @@ from hentai import Hentai, Format
 import requests
 import urllib.parse
 import json
+import dns.resolver
+
+dns_server = '1.1.1.1'
+
+resolver = dns.resolver.Resolver()
+resolver.nameservers = [dns_server]
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
@@ -71,10 +77,17 @@ async def sauce(ctx):
 
 @client.command()
 async def bomb(ctx, tag='loli'):
-    response = requests.get('https://yande.re/post.json?tags={}&limit=100'.format(tag))
+    url = f'https://yande.re/post.json?tags={tag}&limit=100'
 
-    data = convertJson(response.json())
-    await ctx.send(data);
+    response = requests.get(url, resolver)
+
+    # data = convertJson(response.json())
+    data = response.json()
+
+    samples = random.sample(data, 5)
+
+    for bob in samples :
+        await ctx.send(bob['jpeg_url']);
 
 def convertJson(jsonData):
     return jsonData[random.randrange(0,100)]['jpeg_url']
