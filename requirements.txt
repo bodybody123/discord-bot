@@ -3,4 +3,4 @@ python-dotenv==0.21.0
 hentai==3.2.10
 requests==2.27.1
 parse==1.19.0
-dns
+dnspython==2.2.1
