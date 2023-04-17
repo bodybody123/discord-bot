@@ -4,4 +4,3 @@ COPY requirements.txt /cornifer/
 RUN pip install -r requirements.txt
 COPY . /cornifer
 CMD python cornifer.py
-EXPOSE 8080

@@ -10,13 +10,12 @@ import urllib.parse
 import json
 import dns.resolver
 
-dns_server = '1.1.1.1'
-
 resolver = dns.resolver.Resolver()
-resolver.nameservers = [dns_server]
+resolver.nameservers = ["1.1.1.1", "1.0.0.1", "2606:4700:4700::1111", "2606:4700:4700::1001"]
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
+environtment = os.getenv('ENVIRONTMENT')
 
 intents = discord.Intents.all()
 
@@ -34,25 +33,28 @@ async def ping(ctx):
 @client.command()
 async def nhentai(ctx, arg):
 
-    if arg.isnumeric():
-        response: dict = None
-        doujin = await Hentai(int(arg), json=response)
-        if Hentai.exists(doujin.id):
-            embed = discord.Embed(
-                title = doujin.title(Format.Pretty),
-                colour = discord.Colour.blue()
-            ) 
+    try:
+        if arg.isnumeric():
+            response: dict = None
+            doujin = await Hentai(int(arg), json=response)
+            if Hentai.exists(doujin.id):
+                embed = discord.Embed(
+                    title = doujin.title(Format.Pretty),
+                    colour = discord.Colour.blue()
+                ) 
 
-            embed.set_thumbnail(url=doujin.image_urls[0])
-            embed.set_image(url=doujin.image_urls[0])
-            embed.add_field(name='Artist', value=doujin.image_urls[0], inline=False)
-            embed.add_field(name='Tags', value=[tag.name for tag in doujin.tag], inline=False)
-            embed.add_field(name='Sauce', value=f"https://nhentai.net/g/{int(arg)}", inline=False)
+                embed.set_thumbnail(url=doujin.image_urls[0])
+                embed.set_image(url=doujin.image_urls[0])
+                embed.add_field(name='Artist', value=doujin.image_urls[0], inline=False)
+                embed.add_field(name='Tags', value=[tag.name for tag in doujin.tag], inline=False)
+                embed.add_field(name='Sauce', value=f"https://nhentai.net/g/{int(arg)}", inline=False)
 
-            await ctx.send(embed=embed)
+                await ctx.send(embed=embed)
 
-    else:
-        return
+        else:
+            await ctx.send('Bro your nuke code is stupid')
+    except requests.exceptions.RequestException as e:
+        ctx.send('Shits dead just give up horny asshole')
 
 @client.command()
 async def sauce(ctx):
@@ -77,17 +79,23 @@ async def sauce(ctx):
 
 @client.command()
 async def bomb(ctx, tag='loli'):
-    url = f'https://yande.re/post.json?tags={tag}&limit=100'
+    try:
+        url = f'https://yande.re/post.json?tags={tag}&limit=100'
 
-    response = requests.get(url, resolver)
+        response = requests.get(url, resolver)
 
-    # data = convertJson(response.json())
-    data = response.json()
+        # data = convertJson(response.json())
+        data = response.json()
 
-    samples = random.sample(data, 5)
+        samples = random.sample(data, 5)
 
-    for bob in samples :
-        await ctx.send(bob['jpeg_url']);
+        for bob in samples :
+            await ctx.send(bob['jpeg_url']);
+    except requests.exceptions.RequestException as e:
+        if environtment == 'production':
+            await ctx.send('It seems I unable to satisfy your needs you horny fucker')
+        else:
+            await ctx.send(e)
 
 def convertJson(jsonData):
     return jsonData[random.randrange(0,100)]['jpeg_url']
